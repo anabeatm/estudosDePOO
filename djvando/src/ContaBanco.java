@@ -37,8 +37,7 @@ public class ContaBanco {
     }
 
     public ContaBanco() {
-        status = true;
-        getStatus();
+        status = false;
         saldo = 0.0f;
     }
 
@@ -57,13 +56,17 @@ public class ContaBanco {
     }
 
     public void sacar() {
-        if(this.status == true) {
+        if(this.status) {
             System.out.println("Total: " + this.saldo);
-            System.out.println("Valor a ser sacado: R$ ");
+            System.out.print("Valor a ser sacado: R$ ");
             float valorSerSacado = in.nextFloat();
-            this.saldo -= valorSerSacado;
-            this.setSaldo(saldo);
-            System.out.println("Valor sacado!");
+            if (valorSerSacado > this.saldo) {
+                System.out.println("Valor impossível de sacar.");
+            } else {
+                this.saldo -= valorSerSacado;
+                this.setSaldo(saldo);
+                System.out.println("Valor sacado!");
+            }
         } else{
             System.out.println("Impossível sacar.");
         }
@@ -80,29 +83,41 @@ public class ContaBanco {
     }
 
     public void depositar() {
-        if(this.status == true) {
+        if(this.status) {
             System.out.println("Total: " + this.saldo);
             System.out.print("Valor a ser depositado: R$ ");
             float valorDepositar = in.nextFloat();
-            saldo += valorDepositar;
-            this.setSaldo(saldo);
-            System.out.println("Valor depositado!");
+            if(valorDepositar < 0) {
+                System.out.println("Valor impossível de depositar.");
+            } else {
+                saldo += valorDepositar;
+                this.setSaldo(saldo);
+                System.out.println("Valor depositado!");
+            }
         } else {
             System.out.println("Impossível depositar.");
         }
     }
 
     public void pagarMensal() {
-        if(this.tipo == "cc") {
+        if(this.getTipo().equals("cc")) {
             saldo -= 12f;
-            System.out.println("Valor pago!");
+            System.out.println("Valor de R$12 a.m pago!");
             this.setSaldo(saldo);
             System.out.println("Valor total: " + getSaldo());
-        } else if (this.tipo == "cp") {
+        } else if (this.getTipo().equals("cp")) {
             saldo -= 20f;
-            System.out.println("Valor pago!");
+            System.out.println("Valor de R$20 a.m pago!");
             this.setSaldo(saldo);
             System.out.println("Valor total: " + getSaldo());
         }
     }
+
+    public void visualizarContaBancaria() {
+        System.out.printf("""
+                Tipo: %s
+                Saldo: R$%s
+                Status: %s\n""", getTipo(), getSaldo(), getStatus());
+    }
+
 }

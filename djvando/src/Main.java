@@ -31,6 +31,7 @@ public class Main {
                     [3] Depositar
                     [4] Sacar
                     [5] Pagar Mensalidade
+                    [6] Visualizar Conta Bancária
                     [0] Sair""");
             System.out.println("------------------------------------------");
             System.out.print("Opção: ");
@@ -46,7 +47,14 @@ public class Main {
                         + " | Saldo: R$" + conta.getSaldo());
             } else if (entrada == 2) {
                 conta.fecharConta();
-
+            } else if (entrada == 3) {
+                conta.depositar();
+            } else if (entrada == 4) {
+                conta.sacar();
+            } else if (entrada == 5) {
+                conta.pagarMensal();
+            } else if (entrada == 6) {
+                conta.visualizarContaBancaria();
             }
         } while (entrada > 0);
     }
