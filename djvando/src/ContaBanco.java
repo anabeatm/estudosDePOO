@@ -8,12 +8,12 @@ public class ContaBanco {
 
     Scanner in = new Scanner(System.in);
 
-    public void setNumConta(int numeroConta) {
-        numConta = numeroConta;
-    }
-    public int getNumConta() {
-        return this.numConta;
-    }
+//    public void setNumConta(int numeroConta) {
+//        numConta = numeroConta;
+//    }
+//    public int getNumConta() {
+//        return this.numConta;
+//    }
 
     public void setTipo(String t) {
         tipo = t;
