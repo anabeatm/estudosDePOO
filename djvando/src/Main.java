@@ -1,20 +1,9 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-//
-//        System.out.println("""
-//                [1] Abrir Conta
-//                [2] Fechar Conta
-//                [3] Depositar
-//                [4] Sacar
-//                [5] Pagar Mensalidade
-//                [0] Sair""");
-//
-//        System.out.println("Opção: ");
-//        int entrada = in.nextInt();
-//        in.nextLine();
 
         ContaBanco conta = new ContaBanco();
         Main imprimir = new Main();
@@ -32,6 +21,7 @@ public class Main {
                     [4] Sacar
                     [5] Pagar Mensalidade
                     [6] Visualizar Conta Bancária
+                    [7] Número da Conta
                     [0] Sair""");
             System.out.println("------------------------------------------");
             System.out.print("Opção: ");
@@ -55,6 +45,8 @@ public class Main {
                 conta.pagarMensal();
             } else if (entrada == 6) {
                 conta.visualizarContaBancaria();
+            } else if (entrada == 7) {
+                conta.exibirNumConta();
             }
         } while (entrada > 0);
     }

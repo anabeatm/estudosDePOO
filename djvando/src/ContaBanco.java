@@ -1,19 +1,20 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class ContaBanco {
-    private int numConta;
+    private String numConta;
     protected String tipo;
     private float saldo;
     private boolean status;
 
     Scanner in = new Scanner(System.in);
 
-//    public void setNumConta(int numeroConta) {
-//        numConta = numeroConta;
-//    }
-//    public int getNumConta() {
-//        return this.numConta;
-//    }
+    public void setNumConta(String numeroConta) {
+        numConta = numeroConta;
+    }
+    public String getNumConta() {
+        return this.numConta;
+    }
 
     public void setTipo(String t) {
         tipo = t;
@@ -37,19 +38,19 @@ public class ContaBanco {
     }
 
     public ContaBanco() {
-        status = false;
+        this.setStatus(false);
         saldo = 0.0f;
+        gerarNumeroDaConta();
     }
 
     public void abrirConta(String tipoConta) {
         this.status = true;
         this.setTipo(tipoConta);
         if(tipoConta.equals("cc")) {
-            saldo = 50f;
-            this.setSaldo(saldo);
+            this.setSaldo(50f);
         } else if (tipoConta.equals("cp")) {
             saldo = 150f;
-            this.setSaldo(saldo);
+            this.setSaldo(150f);
         } else {
             System.out.println("Ação Inválida!");
         }
@@ -100,16 +101,20 @@ public class ContaBanco {
     }
 
     public void pagarMensal() {
-        if(this.getTipo().equals("cc")) {
-            saldo -= 12f;
-            System.out.println("Valor de R$12 a.m pago!");
-            this.setSaldo(saldo);
-            System.out.println("Valor total: " + getSaldo());
-        } else if (this.getTipo().equals("cp")) {
-            saldo -= 20f;
-            System.out.println("Valor de R$20 a.m pago!");
-            this.setSaldo(saldo);
-            System.out.println("Valor total: " + getSaldo());
+        if(this.status == true) {
+            if(this.getTipo().equals("cc")) {
+                saldo -= 12f;
+                System.out.println("Valor de R$12 a.m pago!");
+                this.setSaldo(saldo);
+                System.out.println("Valor total: " + getSaldo());
+            } else if (this.getTipo().equals("cp")) {
+                saldo -= 20f;
+                System.out.println("Valor de R$20 a.m pago!");
+                this.setSaldo(saldo);
+                System.out.println("Valor total: " + getSaldo());
+            }
+        } else {
+            System.out.println("Acesso negado.");
         }
     }
 
@@ -120,4 +125,36 @@ public class ContaBanco {
                 Status: %s\n""", getTipo(), getSaldo(), getStatus());
     }
 
+    public void gerarNumeroDaConta() {
+        Random random = new Random();
+        int[] numeroDaConta = new int[7];
+        for (int i = 0; i < 7; i++) {
+            numeroDaConta[i] = random.nextInt(10);
+        }
+        String numContaFormatada = formatarNumConta(numeroDaConta);
+        this.setNumConta(numContaFormatada);
+    }
+
+    private String formatarNumConta(int[] numeroDaConta) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(numeroDaConta[0]);
+        sb.append(numeroDaConta[1]);
+        sb.append(".");
+        sb.append(numeroDaConta[2]);
+        sb.append(numeroDaConta[3]);
+        sb.append(numeroDaConta[4]);
+        sb.append("-");
+        sb.append(numeroDaConta[5]);
+        sb.append(numeroDaConta[6]);
+
+        return sb.toString();
+    }
+
+    public void exibirNumConta() {
+        if(this.status == true) {
+            System.out.println(this.getNumConta());
+        } else {
+            System.out.println("Acessado negado.");
+        }
+    }
 }
