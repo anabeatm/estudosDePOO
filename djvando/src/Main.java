@@ -33,7 +33,7 @@ public class Main {
                 String tipoConta = in.nextLine().toLowerCase();
                 conta.abrirConta(tipoConta);
                 System.out.println("Status da conta: " + conta.getStatus() + " | Tipo da conta: " + conta.getTipo()
-                        + " | Saldo: R$" + conta.getSaldo());
+                        + " | Saldo: R$" + conta.getSaldo() + " | Número da Conta: " + conta.getNumConta());
             } else if (entrada == 2) {
                 conta.fecharConta();
             } else if (entrada == 3) {

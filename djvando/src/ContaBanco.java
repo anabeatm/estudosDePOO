@@ -39,7 +39,7 @@ public class ContaBanco {
 
     public ContaBanco() {
         this.setStatus(false);
-        saldo = 0.0f;
+        this.saldo = 0.0f;
         gerarNumeroDaConta();
     }
 
@@ -49,7 +49,6 @@ public class ContaBanco {
         if(tipoConta.equals("cc")) {
             this.setSaldo(50f);
         } else if (tipoConta.equals("cp")) {
-            saldo = 150f;
             this.setSaldo(150f);
         } else {
             System.out.println("Ação Inválida!");
@@ -57,15 +56,14 @@ public class ContaBanco {
     }
 
     public void sacar() {
-        if(this.status) {
-            System.out.println("Total: " + this.saldo);
+        if(this.getStatus()) {
+            System.out.println("Total: " + this.getSaldo());
             System.out.print("Valor a ser sacado: R$ ");
             float valorSerSacado = in.nextFloat();
-            if (valorSerSacado > this.saldo) {
+            if (valorSerSacado > this.getSaldo()) {
                 System.out.println("Valor impossível de sacar.");
             } else {
-                this.saldo -= valorSerSacado;
-                this.setSaldo(saldo);
+                this.setSaldo(this.getSaldo() - valorSerSacado);
                 System.out.println("Valor sacado!");
             }
         } else{
@@ -75,7 +73,7 @@ public class ContaBanco {
 
     public void fecharConta() {
         this.sacar();
-        if(this.saldo > 0) {
+        if(this.getSaldo() > 0) {
             System.out.println("Impossível de fechar a conta!");
         } else {
             this.status = false;
@@ -84,15 +82,14 @@ public class ContaBanco {
     }
 
     public void depositar() {
-        if(this.status) {
-            System.out.println("Total: " + this.saldo);
+        if(this.getStatus()) {
+            System.out.println("Total: " + this.getSaldo());
             System.out.print("Valor a ser depositado: R$ ");
             float valorDepositar = in.nextFloat();
             if(valorDepositar < 0) {
                 System.out.println("Valor impossível de depositar.");
             } else {
-                saldo += valorDepositar;
-                this.setSaldo(saldo);
+                this.setSaldo(this.getSaldo() + valorDepositar);
                 System.out.println("Valor depositado!");
             }
         } else {
@@ -101,16 +98,17 @@ public class ContaBanco {
     }
 
     public void pagarMensal() {
-        if(this.status == true) {
+        float mensalidade;
+        if(this.getStatus()) {
             if(this.getTipo().equals("cc")) {
-                saldo -= 12f;
+                mensalidade = 12f;
+                this.setSaldo(this.getSaldo() - mensalidade);
                 System.out.println("Valor de R$12 a.m pago!");
-                this.setSaldo(saldo);
                 System.out.println("Valor total: " + getSaldo());
             } else if (this.getTipo().equals("cp")) {
-                saldo -= 20f;
+                mensalidade = 20f;
+                this.setSaldo(this.getSaldo() - mensalidade);
                 System.out.println("Valor de R$20 a.m pago!");
-                this.setSaldo(saldo);
                 System.out.println("Valor total: " + getSaldo());
             }
         } else {
@@ -119,10 +117,16 @@ public class ContaBanco {
     }
 
     public void visualizarContaBancaria() {
+        if(this.status) {
         System.out.printf("""
+                Número da Conta: %s
                 Tipo: %s
                 Saldo: R$%s
-                Status: %s\n""", getTipo(), getSaldo(), getStatus());
+                Status: %s
+                """, getNumConta(), getTipo(), getSaldo(), getStatus());
+        } else {
+            System.out.println("Conta inexistente.");
+        }
     }
 
     public void gerarNumeroDaConta() {
@@ -136,22 +140,20 @@ public class ContaBanco {
     }
 
     private String formatarNumConta(int[] numeroDaConta) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(numeroDaConta[0]);
-        sb.append(numeroDaConta[1]);
-        sb.append(".");
-        sb.append(numeroDaConta[2]);
-        sb.append(numeroDaConta[3]);
-        sb.append(numeroDaConta[4]);
-        sb.append("-");
-        sb.append(numeroDaConta[5]);
-        sb.append(numeroDaConta[6]);
 
-        return sb.toString();
+        return String.valueOf(numeroDaConta[0]) +
+                numeroDaConta[1] +
+                "." +
+                numeroDaConta[2] +
+                numeroDaConta[3] +
+                numeroDaConta[4] +
+                "-" +
+                numeroDaConta[5] +
+                numeroDaConta[6];
     }
 
     public void exibirNumConta() {
-        if(this.status == true) {
+        if(this.status) {
             System.out.println(this.getNumConta());
         } else {
             System.out.println("Acessado negado.");
