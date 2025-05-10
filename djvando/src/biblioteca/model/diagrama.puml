@@ -1,0 +1,46 @@
+@startuml diagrama
+class Livro {
+    +titulo: String
+    +autor: String
+    +isbn: String
+    +getResumo(): String
+    +estaDisponivel(): boolean
+}
+
+class Usuario {
+    +nome: String
+    +id: int
+    +listarEmprestimos(): List<Emprestimo>
+    +temEmprestimosPendentes(): boolean
+}
+
+class Biblioteca {
+    +nome: String
+    +livros: List<Livro>
+    +usuarios: List<Usuario>
+    +adicionarLivro(livro: Livro): void
+    +removerLivro(isbn: String): void
+    +registrarUsuario(usuario: Usuario): void
+    +removerUsuario(id: int): void
+    +buscarLivroPorTitulo(titulo: String): List<Livro>
+    +buscarLivroPorAutor(autor: String): List<Livro>
+    +realizarEmprestimo(livro: Livro, usuario: Usuario): Emprestimo
+    +registrarDevolucao(emprestimo: Emprestimo): void
+    +listarEmprestimosAtivos(): List<Emprestimo>
+}
+
+class Emprestimo {
+    +dataEmprestimo: Date
+    +dataDevolucao: Date
+    +livro: Livro
+    +usuario: Usuario
+    +estaAtrasado(): boolean
+    +calcularMulta(diaAtual: Date): double
+}
+
+Biblioteca "1" *-- "many" Livro
+Biblioteca "1" *-- "many" Usuario
+Biblioteca "1" *-- "many" Emprestimo
+Emprestimo "1" *-- "1" Livro
+Emprestimo "1" *-- "1" Usuario
+@enduml

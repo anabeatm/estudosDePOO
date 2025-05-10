@@ -1,3 +1,5 @@
+package contaBancaria.app;
+import contaBancaria.model.ContaBanco;
 import java.util.Scanner;
 
 public class Main {
@@ -11,6 +13,7 @@ public class Main {
 
     public void imprimindoConta(Scanner in, ContaBanco conta) {
         int entrada;
+
         do {
             System.out.println("--> Sua conta bancária!");
             System.out.println("""
@@ -34,19 +37,32 @@ public class Main {
                 conta.abrirConta(tipoConta);
                 System.out.println("Status da conta: " + conta.getStatus() + " | Tipo da conta: " + conta.getTipo()
                         + " | Saldo: R$" + conta.getSaldo() + " | Número da Conta: " + conta.getNumConta());
+
             } else if (entrada == 2) {
-                conta.fecharConta();
+                System.out.print("Valor a ser sacado: R$");
+                float valorSerSacado = in.nextFloat();
+                conta.fecharConta(valorSerSacado);
+
             } else if (entrada == 3) {
-                conta.depositar();
+                System.out.print("Valor a ser depositado: R$");
+                float valorDepositar = in.nextFloat();
+                conta.depositar(valorDepositar);
+
             } else if (entrada == 4) {
-                conta.sacar();
+                System.out.print("Valor a ser sacado: R$");
+                float valorSerSacado = in.nextFloat();
+                conta.sacar(valorSerSacado);
+
             } else if (entrada == 5) {
                 conta.pagarMensal();
+
             } else if (entrada == 6) {
                 conta.visualizarContaBancaria();
+
             } else if (entrada == 7) {
                 conta.exibirNumConta();
             }
+
         } while (entrada > 0);
     }
 }
